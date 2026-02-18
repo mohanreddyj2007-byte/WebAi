@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: exam-support-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120
+    envVars:
+      - key: ONEDRIVE_SHARE_LINK
+        sync: false          # You'll enter this manually in Render dashboard (keep it secret)
+      - key: REFRESH_INTERVAL_MINUTES
+        value: "30"
+    healthCheckPath: /health
